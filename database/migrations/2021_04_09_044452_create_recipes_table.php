@@ -13,7 +13,7 @@ class CreateRecipesTable extends Migration
      */
     public function up()
     {
-        Schema::create('recipes', function (Blueprint $table) {
+        Schema::create('stock_recipes', function (Blueprint $table) {
             $table->id();
             $table->string("name")->nullable(false);
             $table->text("description");
@@ -35,6 +35,6 @@ class CreateRecipesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('recipes');
+        Schema::dropIfExists('stock_recipes');
     }
 }
