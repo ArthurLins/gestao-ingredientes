@@ -34,7 +34,7 @@ class ItemsController extends Controller
         $newItem->unit = $request->input('unit');
         $newItem->stock_id = $stockId;
         $newItem->saveOrFail();
-        return response()->json(['message' => 'Item created'], 201);
+        return response()->json(['code' => 'item_created'], 201);
     }
 
     public function incoming(Request $request, $itemId){
@@ -45,7 +45,7 @@ class ItemsController extends Controller
         $item = StockItem::findOrFail($itemId);
         $item->quantity += $quantity;
         $item->update();
-        return response()->json(['message' => 'Item quantity updated'], 200);
+        return response()->json(['code' => 'item_updated'], 200);
     }
 
     public function outgoing(Request $request, $itemId){
@@ -56,12 +56,12 @@ class ItemsController extends Controller
         $item = StockItem::findOrFail($itemId);
 
         if ($item->quantity < $quantity){
-            return response()->json(['message' => 'Quantity not available'], 400);
+            return response()->json(['code' => 'quantity_not_available'], 400);
         }
 
         $item->quantity -= $quantity;
         $item->update();
-        return response()->json(['message' => 'Item quantity updated'], 200);
+        return response()->json(['code' => 'item_updated'], 200);
     }
 
     public function edit(Request $request, $itemId){
@@ -75,13 +75,13 @@ class ItemsController extends Controller
         $item->description = $request->input('description', $item->description);
         $item->unit = $request->input('unit', $item->unit);
         $item->update();
-        return response()->json(['message' => 'Item updated'], 200);
+        return response()->json(['code' => 'item_updated'], 200);
     }
 
     public function delete($itemId){
         $item = StockItem::findOrFail($itemId);
         $item->delete();
-        return response()->json(['message' => 'Item deleted'], 200);
+        return response()->json(['code' => 'item_deleted'], 200);
     }
 
     public function infos($itemId){

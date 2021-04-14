@@ -30,7 +30,7 @@ class RecipesController extends Controller
         $newRecipe->description = $request->input('description');
         $newRecipe->stock_id = $stockId;
         $newRecipe->saveOrFail();
-        return response()->json(['message' => 'Recipe created'], 201);
+        return response()->json(['code' => 'recipe_created'], 201);
     }
 
     public  function edit(Request $request, $recipeId){
@@ -43,7 +43,7 @@ class RecipesController extends Controller
         $recipe->name = $request->input('name', $recipe->name);
         $recipe->description = $request->input('description', $recipe->description);
         $recipe->update();
-        return response()->json(['message' => 'Recipe updated'], 201);
+        return response()->json(['code' => 'recipe_updated'], 201);
     }
 
     public function make($recipeId){
@@ -56,10 +56,10 @@ class RecipesController extends Controller
                 $stockItem->quantity -= $item->quantity;
                 $stockItem->update();
             }
-            return response()->json(['message' => 'Recipe make executed'], 200);
+            return response()->json(['code' => 'recipe_make_executed'], 200);
         } else {
             return response()->json([
-                'message' => 'Missing recipe items',
+                'code' => 'missing_recipe_items',
                 'items' => $canMake
             ], 400);
         }
@@ -72,7 +72,7 @@ class RecipesController extends Controller
             $stockItem->quantity += $item->quantity;
             $stockItem->update();
         }
-        return response()->json(['message' => 'Recipe undo executed'], 200);
+        return response()->json(['code' => 'recipe_undo'], 200);
     }
 
     public function canMake($recipeId){
@@ -95,7 +95,7 @@ class RecipesController extends Controller
     public function delete($recipeId){
         $recipe = StockRecipe::findOrFail($recipeId);
         $recipe->delete();
-        return response()->json(['message' => 'Recipe deleted'], 200);
+        return response()->json(['code' => 'recipe_deleted'], 200);
     }
 
     public function infos($recipeId){

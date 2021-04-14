@@ -35,7 +35,7 @@ class RecipeItemsController extends Controller
         $newRecipeItem->quantity = $quantity;
         $newRecipeItem->saveOrFail();
 
-        return response()->json(['message' => 'Recipe item created'], 201);
+        return response()->json(['code' => 'recipe_item_created'], 201);
     }
 
     public  function edit(Request $request, $recipeItemId){
@@ -49,13 +49,13 @@ class RecipeItemsController extends Controller
         $recipeItem->quantity =  $request->input("quantity", $recipeItem->quantity);
         $recipeItem->update();
 
-        return response()->json(['message' => 'Recipe item updated'], 200);
+        return response()->json(['code' => 'recipe_item_updated'], 200);
     }
 
     public function delete($recipeItemId){
         $recipeItem = StockRecipeItem::findOrFail($recipeItemId);
         $recipeItem->delete();
-        return response()->json(['message' => 'Recipe item deleted'], 200);
+        return response()->json(['code' => 'recipe_item_deleted'], 200);
     }
 
     public function all($recipeId){

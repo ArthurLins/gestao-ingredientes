@@ -24,12 +24,12 @@ class ItemValidator
 
         $item = StockItem::find($itemId);
         if ($item == null){
-            return response()->json(['message' => 'Item not found'], 404);
+            return response()->json(['code' => 'item_not_found'], 404);
         }
         if ($item->stock_id == $stockId){
             return $next($request);
         }
-        return response()->json(['message' => 'Unauthorized'], 401);
+        return response()->json(['code' => 'unauthorized'], 401);
 
     }
 }

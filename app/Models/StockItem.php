@@ -13,8 +13,4 @@ class StockItem extends Model
 
     protected $fillable = ['name', 'description', 'quantity', 'stock_id', 'unit'];
 
-    public function hasQuantity($quantity){
-        return $this->quantity >= $quantity;
-    }
-
 }

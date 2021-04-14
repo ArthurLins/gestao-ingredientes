@@ -31,7 +31,7 @@ class StocksController extends Controller
         $newStock->owner_id = Auth::id();
         $newStock->saveOrFail();
 
-        return response()->json(['message' => 'Stock created'], 201);
+        return response()->json(['code' => 'stock_created'], 201);
     }
 
     public function infos($stockId){
@@ -41,7 +41,7 @@ class StocksController extends Controller
     public function delete($stockId): JsonResponse
     {
         Stock::findOrFail($stockId)->delete();
-        return response()->json(['message' => 'Stock deleted'], 200);
+        return response()->json(['code' => 'stock_deleted'], 200);
     }
 
     public function all(Request $request) {

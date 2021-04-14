@@ -26,7 +26,7 @@ class AuthController extends Controller
     public function logout() : JsonResponse
     {
         Auth::logout();
-        return response()->json(['message' => 'Successfully logged out']);
+        return response()->json(['code' => 'logged_out']);
     }
 
 
@@ -41,7 +41,7 @@ class AuthController extends Controller
         $credentials = $request->only(['email', 'password']);
 
         if (! $token = Auth::attempt($credentials)) {
-            return response()->json(['message' => 'Unauthorized'], 401);
+            return response()->json(['code' => 'unauthorized'], 401);
         }
 
         return $this->respondWithToken($token);
@@ -69,11 +69,11 @@ class AuthController extends Controller
             $user->save();
 
             //return successful response
-            return response()->json(['user' => $user, 'message' => 'CREATED'], 201);
+            return response()->json(['user' => $user, 'code' => 'user_created'], 201);
 
         } catch (\Exception $e) {
             //return error message
-            return response()->json(['message' => 'User Registration Failed!'], 409);
+            return response()->json(['code' => 'user_registration_failed'], 409);
         }
     }
 
@@ -86,6 +86,7 @@ class AuthController extends Controller
     protected function respondWithToken($token): JsonResponse
     {
         return response()->json([
+            'code' => 'user_token',
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => Auth::factory()->getTTL() * 60

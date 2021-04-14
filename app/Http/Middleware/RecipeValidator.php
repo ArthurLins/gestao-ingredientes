@@ -25,13 +25,13 @@ class RecipeValidator
 
         $recipe = StockRecipe::find($recipeId);
         if ($recipe == null){
-            return response()->json(['message' => 'Recipe not found'], 404);
+            return response()->json(['code' => 'recipe_not_found'], 404);
         }
         if ($recipe->stock_id == $stockId){
             return $next($request);
         }
 
-        return response()->json(['message' => 'Unauthorized'], 401);
+        return response()->json(['message' => 'unauthorized'], 401);
 
     }
 }
