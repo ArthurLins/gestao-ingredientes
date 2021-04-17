@@ -70,6 +70,11 @@ $app->configure('app');
 | route or middleware that'll be assigned to some specific routes.
 |
 */
+
+$app->middleware([
+    App\Http\Middleware\CorsMiddleware::class
+]);
+
  $app->routeMiddleware([
      'auth' => App\Http\Middleware\Authenticate::class,
      'stock.validator' => App\Http\Middleware\StockValidator::class,

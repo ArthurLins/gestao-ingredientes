@@ -15,16 +15,6 @@
 
 use App\Models\User;
 
-
-$router->get('/', function () use ($router) {
-    $stocks = User::findOrFail(1)->stocks()->get();
-    foreach ($stocks as $stock){
-        var_dump($stock->recipes()->first()->name);
-        dd($stock->recipes()->first()->items()->first()->stockItem());
-    }
-    return $router->app->version();
-});
-
 $router->group(['prefix' => 'auth'], function () use ($router) {
     $router->post('register', 'AuthController@register');
     $router->post('login', 'AuthController@login');
